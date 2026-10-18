@@ -1,0 +1,65 @@
+# My Initial Coding (The Wrong One)
+import java.util.Scanner;
+import java.text.DecimalFormat;
+public class Solution2A3 {
+
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		DecimalFormat df = new DecimalFormat("0.00");
+		
+		int code = sc.nextInt();
+		double hours = sc.nextDouble();
+		
+		if (code < 1 || code > 3 || hours <= 0) {
+			System.out.println("Invalid Input");
+		} else {
+			String name = "";
+			double baseFee = 0.0;
+			double addFee = 0.0;
+			
+			if (code ==1) {
+				name = "Motorcycle";
+				baseFee = 2.00;
+				addFee = 1.00;
+			} else if (code == 2) {
+				name = "Car";
+				baseFee = 5.00;
+				addFee = 2.00;
+			} else if (code == 3) {
+				name = "Van";
+				baseFee = 8.00;
+				addFee= 3.00;
+			}
+		}
+		
+		double totalFee = 0.0;
+		
+		if (hours <= baseFee) {
+			totalFee = baseFee;
+		} else {
+			
+			double addHours = hours - 2.0;
+			int wholeAddHours = (int) addHours;
+			if (addHours > wholeAddHours) {
+				wholeAddHours = wholeAddHours + 1;
+			}
+			
+			totalFee = baseFee + (wholeAddHours * addFee);
+		}
+		
+		System.out.println("+++++++++++++++++++++");
+        System.out.println("Gateway Smart Parking");
+        System.out.println("+++++++++++++++++++++");
+        System.out.println(name);
+        System.out.println(hours);
+        System.out.println(df.format(totalFee));
+	}
+
+}
+
+# Can U See the Mistakes?.. Haha,,
+- Variable Scope Issue (name, baseFee, addFee): They are declared inside the else block of your validation check. That means Java treats them as local to that else block, so when you try to use name, hours, and addFee down below, Java will throw a "cannot find symbol" compilation error.
+- Comparison Logic Bug (hours <= baseFee): In the fee calculation, you wrote hours <= baseFee (comparing hours to money like RM5.00), instead of checking if it's within the first 2 hours (hours <= 2.0). 
+- addFee would be 0.0 if it fell out of scope.Currency Prefix (RM): The sample output showed RM 3.00 (with "RM" and a space before the number). DecimalFormat("0.00") only prints the numbers, so we should prefix it with "RM "
+(These are copy pasted from Gemini lolol)
